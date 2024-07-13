@@ -70,7 +70,7 @@ body {
 .name {
     font-family: "Poppins", sans-serif;
     font-size: 1rem;
-    color: #403d43;
+    color: #a0a0a0;
 }
 
 .message {
@@ -144,21 +144,20 @@ body {
     height: 50px;
     margin-right: 20px;
     object-fit: contain;
-}   
-
+}
 pre {
-    background-color: #403d43;
-    border: 2px solid #ddd;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 20px;
+    padding: 10px;
     overflow-x: auto;
 }
 
 code {
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     font-size: 0.9em;
-    color: #e3d5ca;
 }
+
 
     </style>
 </head>
@@ -187,39 +186,6 @@ code {
         });
     
         function sendMessage() {
-<<<<<<< HEAD
-    const inputField = document.getElementById("message-input");
-    const userMessage = inputField.value.trim();
-    if (userMessage === "") return;
-
-    displayMessage(userMessage, 'user');
-
-    conversationHistory.push({
-        role: "user",
-        content: userMessage
-    });
-
-    const payload = {
-        model: "gwen",
-        messages: conversationHistory
-    };
-
-    const eventSource = new EventSource(`/chat?payload=${encodeURIComponent(JSON.stringify(payload))}`);
-
-    let currentMessage = '';  // Variable to accumulate current message
-
-    eventSource.onmessage = function(event) {
-        const data = JSON.parse(event.data);
-        if (data.content) {
-            if (!currentMessage) {
-                currentMessage = data.content;
-            } else {
-                currentMessage += ' ' + data.content;
-            }
-        } else {
-            // Handle error or other responses
-            console.error('Received unexpected message format:', data);
-=======
             const inputField = document.getElementById("message-input");
             const userMessage = inputField.value.trim();
             if (userMessage === "") return;
@@ -249,50 +215,7 @@ code {
             };
     
             inputField.value = "";
->>>>>>> parent of 949230a (context added)
         }
-        updateMessage(currentMessage);
-    };
-
-    eventSource.onerror = function(error) {
-        console.error('EventSource failed:', error);
-        eventSource.close();
-    };
-
-    inputField.value = "";
-
-    function updateMessage(message) {
-        const chatBox = document.getElementById("chat-box");
-        const messageContainer = document.createElement("div");
-        messageContainer.className = "message-container assistant";
-    
-        const nameIconContainer = document.createElement("div");
-        nameIconContainer.className = "name-icon-container";
-    
-        const icon = document.createElement("img");
-        icon.className = "icon";
-        icon.src = '/static/images/gwen1.png';
-        icon.alt = 'G.W.E.N.';
-    
-        const name = document.createElement("span");
-        name.className = "name";
-        name.textContent = 'G.W.E.N.';
-    
-        nameIconContainer.appendChild(icon);
-        nameIconContainer.appendChild(name);
-    
-        const messageElement = document.createElement("div");
-        messageElement.className = "message";
-        messageElement.innerHTML = marked.parse(message);
-    
-        messageContainer.appendChild(nameIconContainer);
-        messageContainer.appendChild(messageElement);
-        chatBox.appendChild(messageContainer);
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-}
-
-
     
         function displayMessage(message, role, streaming = false) {
             const chatBox = document.getElementById("chat-box");
@@ -333,11 +256,5 @@ code {
             chatBox.scrollTop = chatBox.scrollHeight;
         }
     </script>
-<<<<<<< HEAD
-    
-    
-=======
->>>>>>> parent of 949230a (context added)
-
 </body>
 </html>

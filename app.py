@@ -1,6 +1,7 @@
-import json
-import requests
 from flask import Flask, request, jsonify, render_template, send_from_directory, Response, stream_with_context
+import requests
+import json
+import os
 
 app = Flask(__name__, static_folder='static')
 
@@ -20,12 +21,8 @@ def chat():
         user_message = request.json.get('message')
 
     payload = {
-        "model": "gwen",
+        "model": "gwen",  # Change model to "gwen"
         "messages": [
-            {
-                "role": "system",
-                "content": "You are G.W.E.N. (Genius Woman for Everyday Needs) created by Shakshat. You are made to help me solve questions and be my study assistant."
-            },
             {
                 "role": "user",
                 "content": user_message
@@ -39,7 +36,10 @@ def chat():
                 response.raise_for_status()
                 for line in response.iter_lines():
                     if line:
-                        yield f"data: {line.decode('utf-8')}\n\n"
+                        response_data = json.loads(line)
+                        content = response_data.get('message', {}).get('content', '')
+                        if content:
+                            yield f"data: {json.dumps({'content': content})}\n\n"
         except requests.exceptions.RequestException as req_err:
             print(f"RequestException: {req_err}")
             yield f"data: {json.dumps({'error': 'Request failed', 'details': str(req_err)})}\n\n"
