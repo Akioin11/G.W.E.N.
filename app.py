@@ -16,27 +16,13 @@ def send_static(path):
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
     if request.method == 'GET':
-        user_message = request.args.get('message')
+        payload = request.args.get('payload')
     else:
-        user_message = request.json.get('message')
-
-    payload = {
-        "model": "gwen",
-        "messages": [
-            {
-                "role": "system",
-                "content": "You are G.W.E.N. (Genius Woman for Everyday Needs) created by Shakshat. You are made to help me solve questions and be my study assistant."
-            },
-            {
-                "role": "user",
-                "content": user_message
-            }
-        ]
-    }
+        payload = request.json.get('payload')
 
     def generate():
         try:
-            with requests.post('http://localhost:11434/api/chat', json=payload, stream=True) as response:
+            with requests.post('http://localhost:11434/api/chat', json=json.loads(payload), stream=True) as response:
                 response.raise_for_status()
                 for line in response.iter_lines():
                     if line:
