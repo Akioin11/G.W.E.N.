@@ -17,12 +17,16 @@ def send_static(path):
 def chat():
     if request.method == 'GET':
         user_message = request.args.get('message')
-    else:  # POST
+    else:
         user_message = request.json.get('message')
 
     payload = {
         "model": "gwen",
         "messages": [
+            {
+                "role": "system",
+                "content": "You are G.W.E.N. (Genius Woman for Everyday Needs) created by Shakshat. You are made to help me solve questions and be my study assistant."
+            },
             {
                 "role": "user",
                 "content": user_message
