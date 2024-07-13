@@ -175,13 +175,6 @@ code {
     </div>
 
     <script>
-        let conversationHistory = [
-            {
-                role: "system",
-                content: "You are G.W.E.N. (Genius Woman for Everyday Needs) created by Shakshat. You are made to help me solve questions and be my study assistant."
-            }
-        ];
-    
         document.getElementById("message-input").addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
                 sendMessage();
@@ -193,6 +186,7 @@ code {
         });
     
         function sendMessage() {
+<<<<<<< HEAD
     const inputField = document.getElementById("message-input");
     const userMessage = inputField.value.trim();
     if (userMessage === "") return;
@@ -224,6 +218,37 @@ code {
         } else {
             // Handle error or other responses
             console.error('Received unexpected message format:', data);
+=======
+            const inputField = document.getElementById("message-input");
+            const userMessage = inputField.value.trim();
+            if (userMessage === "") return;
+    
+            displayMessage(userMessage, 'user');
+    
+            const eventSource = new EventSource(`/chat?message=${encodeURIComponent(userMessage)}`);
+            
+            let assistantMessage = '';
+            let messageContainer = null;
+    
+            eventSource.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                if (data.content) {
+                    assistantMessage += data.content;
+                    if (!messageContainer) {
+                        messageContainer = displayMessage(assistantMessage, 'assistant', true);
+                    } else {
+                        updateMessage(messageContainer, assistantMessage);
+                    }
+                }
+            };
+    
+            eventSource.onerror = function(error) {
+                console.error('EventSource failed:', error);
+                eventSource.close();
+            };
+    
+            inputField.value = "";
+>>>>>>> parent of 949230a (context added)
         }
         updateMessage(currentMessage);
     };
@@ -307,8 +332,11 @@ code {
             chatBox.scrollTop = chatBox.scrollHeight;
         }
     </script>
+<<<<<<< HEAD
     
     
+=======
+>>>>>>> parent of 949230a (context added)
 
 </body>
 </html>
