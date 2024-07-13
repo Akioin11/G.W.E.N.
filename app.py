@@ -1,7 +1,6 @@
-from flask import Flask, request, jsonify, render_template, send_from_directory, Response, stream_with_context
-import requests
 import json
-import os
+import requests
+from flask import Flask, request, jsonify, render_template, send_from_directory, Response, stream_with_context
 
 app = Flask(__name__, static_folder='static')
 
@@ -26,10 +25,7 @@ def chat():
                 response.raise_for_status()
                 for line in response.iter_lines():
                     if line:
-                        response_data = json.loads(line)
-                        content = response_data.get('message', {}).get('content', '')
-                        if content:
-                            yield f"data: {json.dumps({'content': content})}\n\n"
+                        yield f"data: {line.decode('utf-8')}\n\n"
         except requests.exceptions.RequestException as req_err:
             print(f"RequestException: {req_err}")
             yield f"data: {json.dumps({'error': 'Request failed', 'details': str(req_err)})}\n\n"
