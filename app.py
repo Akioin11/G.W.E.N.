@@ -17,12 +17,18 @@ def send_static(path):
 def chat():
     if request.method == 'GET':
         user_message = request.args.get('message')
+        model = request.args.get('model', 'model')
     else:
         user_message = request.json.get('message')
+        model = request.json.get('model', 'model')
 
     payload = {
-        "model": "gwen",  # Change model to "gwen"
+        "model": model,
         "messages": [
+            {
+                "role": "system",
+                "content": "You are G.W.E.N. (Genius Woman for Everyday Needs), an assistant created by Shakshat. Respond to user queries and assist with studies. Do not introduce yourself in every response."
+            },
             {
                 "role": "user",
                 "content": user_message

@@ -11,154 +11,163 @@
     <link rel="icon" href="https://i.ibb.co/QCkdXDR/gwen.png">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;  
-    font-family: 'Trebuchet MS', sans-serif;
-    background: rgb(238,174,202);
-    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
-}
+        /* Existing styles remain the same */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;  
+            font-family: 'Trebuchet MS', sans-serif;
+            background: rgb(36, 36, 36);
+        }
 
-#chat-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    max-width: auto;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow: auto;
-    background: rgb(238,174,202);
-    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
-    background: url('/static/images/bg.png') no-repeat center center fixed;
-    background-size: cover;
-}
+        #chat-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            max-width: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: auto;
+            background: rgb(36, 36, 36);
+            background: url('/static/images/bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
 
-#chat-box { 
-    flex: 1;
-    overflow-y: scroll;
-    padding: 25px;
-    border-bottom: 1px solid #e3d5ca;
-}
+        #chat-box { 
+            flex: 1;
+            overflow-y: scroll;
+            padding: 25px;
+        }
 
-.message-container {
-    margin: 10px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
+        .message-container {
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
 
-.message-container.assistant {
-    align-items: flex-start;
-}
+        .message-container.assistant {
+            align-items: flex-start;
+        }
 
-.name-icon-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
+        .name-icon-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
 
-.icon {
-    width: 25px;
-    height: 25px;
-    margin-right: 15px;
-}
+        .icon {
+            width: 25px;
+            height: 25px;
+            margin-right: 15px;
+        }
 
-.name {
-    font-family: "Poppins", sans-serif;
-    font-size: 1rem;
-    color: #a0a0a0;
-}
+        .name {
+            font-family: "Poppins", sans-serif;
+            font-size: 1rem;
+            color: #a4a4a4;
+        }
 
-.message {
+        .message {
+            padding: 15px;
+            border-radius: 20px;
+            max-width: 70%;
+        }
 
-    padding: 15px;
-    border-radius: 20px;
-    max-width: 70%;
-}
+        .user .message {
+            background-color: #f4f4f4;
+            color: #0f191c;
+            font-family: "Poppins", sans-serif;
+        }
 
-.user .message {
-    background-color: #e4e0de;
-    color: #403d43;
-    font-family: "Poppins", sans-serif;
-}
+        .assistant .message {
+            background-color: #0f191c;
+            color: #f4f4f4;
+            font-family: "Poppins", sans-serif;
+        }
 
-.assistant .message {
-    background-color: #403d43;
-    color: #f5ebe0;
-    font-family: "Poppins", sans-serif;
-}
+        #input-container {
+            display: flex;
+            padding: 10px;
+            background-color: #e3d5ca00;
+        }
 
-#input-container {
-    display: flex;
-    padding: 10px;
-    border-radius: 20px;
-    background-color: #e3d5ca00;
-}
+        #message-input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+            background-color: #f4f4f4;
+            font-size: 1em;
+            font-family: "Poppins", sans-serif;
+            color: #403d43;
+        }
 
-#message-input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #edede9;
-    border-radius: 20px;
-    background-color: #edede9;
-    font-size: 1em;
-    font-family: "Poppins", sans-serif;
-    color: #403d43;
-}
+        #send-button, #stop-button {
+            font-family: "Poppins", sans-serif;
+            margin-left: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #f4f4f4;
+            color: #333d56;
+            font-size: 1em;
+            cursor: pointer;
+        }
 
-#send-button {
-    font-family: "Poppins", sans-serif;
-    margin-left: 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    background-color: #edede9;
-    color: #333d56;
-    font-size: 1em;
-    cursor: pointer;
-}
+        #send-button:hover, #stop-button:hover {
+            background-color: #f4f4f4;
+        }
 
-#send-button:hover {
-    background-color: #e3d5ca;
-}
+        #title {
+            margin: 20px;
+            font-family: "Anton SC", sans-serif;
+            font-size: 50px;
+            display: flex;
+            align-items: center;
+            background-color: #333d5600;
+            border-radius: 20px;
+            padding: 0 20px;
+            align-self: flex-start;
+            color: #f4f4f4;
+        }
 
-#title {
-    margin: 20px;
-    font-family: "Anton SC", sans-serif;
-    font-size: 50px;
-    display: flex;
-    align-items: center;
-    background-color: #333d5600;
-    border-radius: 20px;
-    padding: 0 20px;
-    align-self: flex-start;
-    color: #403d43;
-}
+        #logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 20px;
+            object-fit: contain;
+        }
 
-#logo {
-    width: 50px;
-    height: 50px;
-    margin-right: 20px;
-    object-fit: contain;
-}
-pre {
-    background-color: #f4f4f4;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 10px;
-    overflow-x: auto;
-}
+        pre {
+            background-color: #202020;
+            border-radius: 15px;
+            padding: 10px;
+            overflow-x: auto;
+        }
 
-code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    font-size: 0.9em;
-}
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+        }
 
+        #model-select {
+            margin-left: 1100px;
+            padding: 0px;
+            border-radius: 15px;
+            background-color: #f4f4f4;
+            color: #333d56;
+            font-size: 0.4em;
+            font-family: "Poppins", sans-serif;
+            border: 2px solid #333d56;
+            cursor: pointer;
+        }
 
+        #model-select:hover {
+            background-color: #e0e0e0;
+        }
     </style>
 </head>
 <body>
@@ -166,15 +175,28 @@ code {
         <div id="title">
             <img src="/static/images/gwen.png" alt="G.W.E.N. Logo" id="logo">
             <span> G.W.E.N.</span>
+            <select id="model-select">
+                <option value="gwen"> G.W.E.N.</option>
+                <option value="qwen2:0.5b"> QWEN</option>
+                <option value="deepseek-coder"> DeepSeek</option>
+            </select>
         </div>
         <div id="chat-box"></div>
         <div id="input-container">
             <input type="text" id="message-input" placeholder="Type a message">
+            <button id="stop-button">Stop</button>
             <button id="send-button">Send</button>
         </div>
     </div>
 
     <script>
+        let eventSource = null;
+        let selectedModel = 'gwen'; // default model
+
+        document.getElementById("model-select").addEventListener("change", function () {
+            selectedModel = this.value;
+        });
+
         document.getElementById("message-input").addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
                 sendMessage();
@@ -184,7 +206,11 @@ code {
         document.getElementById("send-button").addEventListener("click", function () {
             sendMessage();
         });
-    
+
+        document.getElementById("stop-button").addEventListener("click", function () {
+            stopMessage();
+        });
+
         function sendMessage() {
             const inputField = document.getElementById("message-input");
             const userMessage = inputField.value.trim();
@@ -192,7 +218,7 @@ code {
     
             displayMessage(userMessage, 'user');
     
-            const eventSource = new EventSource(`/chat?message=${encodeURIComponent(userMessage)}`);
+            eventSource = new EventSource(`/chat?message=${encodeURIComponent(userMessage)}&model=${selectedModel}`);
             
             let assistantMessage = '';
             let messageContainer = null;
@@ -215,6 +241,14 @@ code {
             };
     
             inputField.value = "";
+        }
+    
+        function stopMessage() {
+            if (eventSource) {
+                eventSource.close();
+                eventSource = null;
+                console.log("EventSource closed.");
+            }
         }
     
         function displayMessage(message, role, streaming = false) {
