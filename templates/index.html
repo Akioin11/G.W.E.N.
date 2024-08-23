@@ -11,7 +11,6 @@
     <link rel="icon" href="https://i.ibb.co/QCkdXDR/gwen.png">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
-        /* Existing styles remain the same */
         body {
             display: flex;
             justify-content: center;
@@ -191,7 +190,7 @@
 
     <script>
         let eventSource = null;
-        let selectedModel = 'gwen'; // default model
+        let selectedModel = 'gwen';
 
         document.getElementById("model-select").addEventListener("change", function () {
             selectedModel = this.value;
@@ -232,6 +231,7 @@
                     } else {
                         updateMessage(messageContainer, assistantMessage);
                     }
+                    speakText(data.content);
                 }
             };
     
@@ -273,21 +273,27 @@
     
             const messageElement = document.createElement("div");
             messageElement.className = "message";
-            messageElement.innerHTML = role === 'user' ? message : marked.parse(message);
+            messageElement.innerHTML = marked.parse(message);
     
             messageContainer.appendChild(nameIconContainer);
             messageContainer.appendChild(messageElement);
-            chatBox.appendChild(messageContainer);
-            chatBox.scrollTop = chatBox.scrollHeight;
     
-            return streaming ? messageContainer : null;
+            chatBox.appendChild(messageContainer);
+    
+            if (!streaming) {
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+    
+            return messageElement;
         }
     
-        function updateMessage(container, message) {
-            const messageElement = container.querySelector('.message');
-            messageElement.innerHTML = marked.parse(message);
-            const chatBox = document.getElementById("chat-box");
-            chatBox.scrollTop = chatBox.scrollHeight;
+        function updateMessage(messageElement, newMessage) {
+            messageElement.innerHTML = marked.parse(newMessage);
+        }zzzzzzzzz
+
+        function speakText(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(utterance);
         }
     </script>
 </body>
